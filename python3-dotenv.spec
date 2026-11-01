@@ -7,17 +7,17 @@
 Summary:	Add .env support to your django/flask apps in development and deployments
 Summary(pl.UTF-8):	Dodanie obsługi .env do aplikacji django/flaska w trakcie rozwoju i wdrożeń
 Name:		python3-%{module}
-Version:	1.2.1
+Version:	1.2.4
 Release:	1
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/python-dotenv/
 Source0:	https://files.pythonhosted.org/packages/source/p/python-dotenv/python_dotenv-%{version}.tar.gz
-# Source0-md5:	72b43685c14b492ced7ed6fb1e3f1d63
+# Source0-md5:	ef4507c345544f1b9ef984b8e31eaad1
 URL:		https://pypi.org/project/python-dotenv/
 BuildRequires:	python3-build
 BuildRequires:	python3-installer
-BuildRequires:	python3-modules >= 1:3.9
+BuildRequires:	python3-modules >= 1:3.10
 BuildRequires:	python3-setuptools >= 1:77.0
 %if %{with tests}
 BuildRequires:	python3-click >= 5.0
@@ -35,7 +35,7 @@ BuildRequires:	python3-mkdocstrings >= 0.24.0
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.044
-Requires:	python3-modules >= 1:3.9
+Requires:	python3-modules >= 1:3.10
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -57,8 +57,9 @@ wdrożeń.
 # dotenv entrypoint script stub
 install -d build-3/bin
 cat >build-3/bin/dotenv <<'EOF'
-#!/bin/sh
-%{__python3} -m dotenv "$@"
+#!%{__python3}
+from dotenv.cli import cli
+cli()
 EOF
 chmod 755 build-3/bin/dotenv
 
